@@ -10,9 +10,9 @@
     <div class="hero-label">Investment Research + AI Systems</div>
     <h1>AI Investment<br>Research Systems</h1>
     <p class="lead">
-      I build and deploy AI tools for equity research workflows: thesis monitoring,
-      red-team analysis, document triage, behavioural guardrails, and portfolio
-      news surveillance.
+      I design and deploy AI tools for investment research workflows to screen ideas,
+      build theses, analyse documents, monitor news and filings, challenge behavioural
+      biases, and review portfolios more systematically.
     </p>
     <div class="d-flex flex-wrap gap-2">
       <a href="{{ url_for('tools') }}" class="btn-primary-inv">View Tools</a>
@@ -111,43 +111,66 @@
     <div class="section-label">Context</div>
     <h2 class="section-title">Why This Matters</h2>
     <p class="section-subtitle">
-      AI does not solve the hard problem in investment research. The hard problem is
-      structured judgement, auditability, and decision discipline. These tools are built
-      around that reality.
+      AI does not solve the hardest problem in investment research by itself.
+      The hard problem is not summarisation. It is structured judgement, auditability,
+      decision discipline, and the ability to convert information into repeatable
+      investment decisions. These tools are built around that reality.
     </p>
     <div class="rationale-grid">
       <div class="rationale-item">
-        <h4>Too many plausible answers</h4>
+        <h4>1. Too many plausible answers</h4>
         <p>
-          LLMs produce fluent, confident text regardless of whether the underlying
-          reasoning is sound. In investment research, plausible is not the same as
-          correct. The bottleneck has shifted from information access to output
-          evaluation.
+          LLMs produce fluent, confident text even when the underlying reasoning is weak.
+          In investment research, plausible is not the same as correct — a well-written
+          answer can still be incomplete, wrongly weighted, or based on a fragile assumption.
+          The bottleneck has shifted from information access to output evaluation.
         </p>
       </div>
       <div class="rationale-item">
-        <h4>Auditability is not optional</h4>
+        <h4>2. Auditability and decision trails</h4>
         <p>
-          Research decisions need to be traceable. Every tool in this system is designed
-          to surface sources, flag confidence, and separate retrieval from reasoning —
-          so the analyst can verify rather than simply accept.
+          Research decisions need to be traceable. Every tool surfaces sources, flags
+          confidence, and makes assumptions explicit — so the analyst can verify rather
+          than accept. A good research system leaves behind a clear record of what was
+          believed, why, what evidence supported it, and what would change the conclusion.
         </p>
       </div>
       <div class="rationale-item">
-        <h4>Workflows, not point answers</h4>
+        <h4>3. Workflows and persistent context</h4>
         <p>
-          A single LLM prompt is not an investment research process. These tools embed
-          structured workflows: thesis formalisation, assumption monitoring, staged
-          filtering, and explicit kill-switch conditions.
+          A single prompt is not a research process. Investment research requires staged
+          judgement across idea intake, thesis formalisation, assumption testing, monitoring,
+          and review. These tools embed structured workflows and carry forward prior theses,
+          filings, valuation assumptions, and decision history across the research lifecycle.
         </p>
       </div>
       <div class="rationale-item">
-        <h4>Hallucination risk is real</h4>
+        <h4>4. Hallucination risk is real</h4>
         <p>
-          Every output on this site is labelled as a research aid requiring analyst
-          review. AI-generated financial content carries hallucination risk on
-          figures, dates, and attributed quotes. Source discipline is built into
-          every tool.
+          AI-generated financial content carries real hallucination risk around figures,
+          dates, source attribution, and company events. Source discipline is therefore
+          built into the workflow. Over time, these tools will incorporate agentic loops —
+          retrieve, reason, verify, challenge, revise, and escalate uncertainty where needed.
+        </p>
+      </div>
+      <div class="rationale-item">
+        <h4>5. Decision support and behavioural guardrails</h4>
+        <p>
+          Most AI tools stop at retrieval and summarisation. The more valuable layer is
+          decision support: comparing evidence, weighing uncertainty, and identifying
+          disconfirming signals. These tools also introduce behavioural guardrails —
+          red-teaming, kill-switches, and structured review prompts — to counter anchoring,
+          thesis drift, and confirmation bias.
+        </p>
+      </div>
+      <div class="rationale-item">
+        <h4>6. Repeatable judgement across the portfolio</h4>
+        <p>
+          Good investment judgement should not depend on mood, memory, or prompt quality.
+          Structured templates, scoring logic, and explicit assumptions make judgement more
+          consistent across companies, sectors, and time periods. The end goal is not better
+          company notes — it is better portfolio construction, risk management, and
+          decision discipline.
         </p>
       </div>
     </div>
@@ -163,7 +186,7 @@
     <h2 class="section-title">How These Tools Are Built</h2>
     <p class="section-subtitle">
       A consistent, production-oriented Python stack. Every tool is deployed, version-controlled,
-      and built for repeatability — not notebook prototypes.
+      and built for repeatability &mdash; not notebook prototypes.
     </p>
     <div class="row g-4 mt-1">
       <div class="col-md-6 col-lg-3">
@@ -172,8 +195,6 @@
           <span class="stack-item">Python</span>
           <span class="stack-item">Flask</span>
           <span class="stack-item">FastAPI</span>
-          <span class="stack-item">Jinja2</span>
-          <span class="stack-item">Gunicorn</span>
         </div>
       </div>
       <div class="col-md-6 col-lg-3">
@@ -181,8 +202,7 @@
         <div class="stack-grid">
           <span class="stack-item">Groq API</span>
           <span class="stack-item">Llama 3</span>
-          <span class="stack-item">Mixtral</span>
-          <span class="stack-item">Prompt chaining</span>
+          <span class="stack-item">GPT-OSS</span>
         </div>
       </div>
       <div class="col-md-6 col-lg-3">
@@ -197,7 +217,6 @@
         <div class="stack-grid">
           <span class="stack-item">Render</span>
           <span class="stack-item">GitHub</span>
-          <span class="stack-item">Environment vars</span>
         </div>
       </div>
     </div>
@@ -212,8 +231,8 @@
     <div class="section-label">Shipping Discipline</div>
     <h2 class="section-title">Recent Builds</h2>
     <p class="section-subtitle">
-      Building and deploying 2–3 new tools per week. Each is a response to a
-      specific, observed friction point in the equity research process.
+      Building and deploying 2&#8211;3 new tools per week. Each tool is an exploration
+      to address a specific, observed friction point in the equity investment process.
     </p>
     <div class="row g-3">
       {% for tool in tools[:4] %}
@@ -221,7 +240,8 @@
         <div class="d-flex align-items-start gap-3 p-3" style="border:1px solid var(--border); border-radius:var(--radius-card); background:var(--bg);">
           <div style="flex:1;">
             <div style="font-size:0.75rem; color:var(--text-light); margin-bottom:0.2rem;">
-              {{ tool.workflow_stage }}
+              {% set raw = tool.workflow_stages if tool.workflow_stages is defined else tool.workflow_stage %}
+              {% if raw is string %}{{ raw }}{% else %}{{ raw | join(' &middot; ') }}{% endif %}
             </div>
             <h4 style="font-size:0.95rem; font-weight:600; margin-bottom:0.35rem;">{{ tool.name }}</h4>
             <p style="font-size:0.85rem; color:var(--text-muted); margin:0;">{{ tool.one_line }}</p>

@@ -35,16 +35,23 @@
     <!-- Cards -->
     <div class="row g-3" id="toolsGrid">
       {% for tool in tools %}
+      {% set raw_stages = tool.workflow_stages if tool.workflow_stages is defined else tool.workflow_stage %}
+      {% set stage_list = raw_stages if raw_stages is not string else [raw_stages] %}
+      {% set ns = namespace(slugs='') %}
+      {% for s in stage_list %}
+        {% set slug = 'stage-' ~ (s | replace(' ', '-') | replace('/', '-') | lower) %}
+        {% set ns.slugs = (ns.slugs ~ ' ' ~ slug).strip() %}
+      {% endfor %}
       <div class="col-md-6 col-lg-4 tool-item"
            data-category="{{ 'category-' + tool.category | replace(' ', '-') | lower }}"
-           data-stage="{{ 'stage-' + tool.workflow_stage | replace(' ', '-') | replace('/', '-') | lower }}">
+           data-stages="{{ ns.slugs }}">
         <div class="tool-card">
           <div class="tool-card-header">
             <h3>{{ tool.name }}</h3>
             <span class="status-badge status-{{ tool.status | lower }}">{{ tool.status }}</span>
           </div>
           <div class="tool-card-meta">
-            {{ tool.workflow_stage }} &middot; {{ tool.category }}
+            {{ stage_list | join(' · ') }} &middot; {{ tool.category }}
           </div>
           <p>{{ tool.one_line }}</p>
           <div class="tool-card-tags">
@@ -104,10 +111,11 @@
       let visible = 0;
 
       toolItems.forEach(item => {
+        const itemStages = (item.dataset.stages || '').split(' ');
         if (
           filter === 'all' ||
           item.dataset.category === filter ||
-          item.dataset.stage === filter
+          itemStages.includes(filter)
         ) {
           item.style.display = '';
           visible++;

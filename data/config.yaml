@@ -1,0 +1,8 @@
+workflow_stages:
+  - "Idea Intake"
+  - "Thesis Creation"
+  - "Thesis Extraction"
+  - "Variant Perception"
+  - "News / Document Monitoring"
+  - "Behavioural Guardrails"
+  - "Portfolio Review"

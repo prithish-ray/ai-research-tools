@@ -3,7 +3,7 @@
   status: "Live"
   featured: true
   category: "Company Analysis"
-  workflow_stage: "Thesis Extraction"
+  workflow_stage: "Thesis Creation"
   one_line: "Generates structured, source-linked company research notes from a ticker or name input."
   problem: >
     Analysts spend significant time assembling basic company context before they can begin
@@ -84,7 +84,9 @@
   status: "Live"
   featured: true
   category: "News Surveillance"
-  workflow_stage: "News / Document Monitoring"
+  workflow_stages:
+    - "News / Document Monitoring"
+    - "Portfolio Review"
   one_line: "Monitors live news for a portfolio of holdings and surfaces material developments by company."
   problem: >
     Portfolio managers and analysts with 20-40 holdings cannot manually monitor news
@@ -162,7 +164,9 @@
   status: "Live"
   featured: true
   category: "Thesis Management"
-  workflow_stage: "Thesis Extraction"
+  workflow_stages:
+    - "Thesis Extraction"
+    - "News / Document Monitoring"
   one_line: "Records a formalised investment thesis and monitors for news that challenges or confirms its key assumptions."
   problem: >
     Analysts rarely write down the explicit assumptions underpinning a position at the

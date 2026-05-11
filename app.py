@@ -24,6 +24,13 @@ def load_build_log():
     return sorted(entries, key=lambda x: x.get("date", ""), reverse=True)
 
 
+def load_config():
+    """Load site config (workflow stages, etc.) from YAML."""
+    data_path = os.path.join(os.path.dirname(__file__), "data", "config.yaml")
+    with open(data_path, "r", encoding="utf-8") as f:
+        return yaml.safe_load(f) or {}
+
+
 # ---------------------------------------------------------------------------
 # Routes
 # ---------------------------------------------------------------------------
@@ -32,20 +39,18 @@ def load_build_log():
 def index():
     tools = load_tools()
     featured = [t for t in tools if t.get("featured")]
-    workflow_stages = [
-        "Idea Intake",
-        "Thesis Extraction",
-        "Variant Perception",
-        "Red-Team Challenge",
-        "News / Document Monitoring",
-        "Kill-Switch Tracking",
-        "Behavioural Guardrails",
-        "Portfolio Review",
-    ]
+    config = load_config()
+    workflow_stages = config.get("workflow_stages", [])
     # Map tools to their workflow stage for the workflow section
+    def tool_in_stage(tool, stage):
+        val = tool.get("workflow_stages") or tool.get("workflow_stage")
+        if isinstance(val, list):
+            return stage in val
+        return val == stage
+
     stage_map = {}
     for stage in workflow_stages:
-        stage_map[stage] = [t for t in tools if t.get("workflow_stage") == stage]
+        stage_map[stage] = [t for t in tools if tool_in_stage(t, stage)]
     return render_template(
         "index.html",
         tools=tools,
@@ -59,7 +64,14 @@ def index():
 def tools():
     all_tools = load_tools()
     categories = sorted({t.get("category", "") for t in all_tools if t.get("category")})
-    stages = sorted({t.get("workflow_stage", "") for t in all_tools if t.get("workflow_stage")})
+    stages_set = set()
+    for t in all_tools:
+        val = t.get("workflow_stages") or t.get("workflow_stage")
+        if isinstance(val, list):
+            stages_set.update(val)
+        elif val:
+            stages_set.add(val)
+    stages = sorted(stages_set)
     statuses = sorted({t.get("status", "") for t in all_tools if t.get("status")})
     return render_template(
         "tools.html",

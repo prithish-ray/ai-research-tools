@@ -17,7 +17,12 @@
     </div>
     <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
       <span class="status-badge status-{{ tool.status | lower }}">{{ tool.status }}</span>
-      <span class="tag tag-navy">{{ tool.workflow_stage }}</span>
+      {% set stages = tool.workflow_stages if tool.workflow_stages is defined else tool.workflow_stage %}
+      {% if stages is string %}
+        <span class="tag tag-navy">{{ stages }}</span>
+      {% else %}
+        {% for s in stages %}<span class="tag tag-navy">{{ s }}</span>{% endfor %}
+      {% endif %}
       <span class="tag tag-navy">{{ tool.category }}</span>
     </div>
     <h1>{{ tool.name }}</h1>
@@ -230,13 +235,12 @@
           </div>
 
           <!-- Back to tools -->
-          <a href="{{ url_for('tools') }}" class="btn-sm-outline d-block text-center mt-2">
-            &larr; All Tools
-          </a>
+          <div style="margin-top:1rem;">
+            <a href="{{ url_for('tools') }}" class="btn-sm-outline">&larr; All Tools</a>
+          </div>
 
-        </div>
-      </div>
-
+        </div><!-- /sticky -->
+      </div><!-- /col sidebar -->
     </div><!-- /row -->
   </div><!-- /container -->
 </section>
