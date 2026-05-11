@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Server Error — Prithish Ray{% endblock %}
+{% block content %}
+<div class="container error-page">
+  <h1>500</h1>
+  <h2>Something went wrong</h2>
+  <p>An internal server error occurred. Please try again or contact me directly.</p>
+  <a href="{{ url_for('index') }}" class="btn-sm-navy">Go to Home</a>
+</div>
+{% endblock %}

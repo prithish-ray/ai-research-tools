@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+
+{% block title %}About — Prithish Ray AI Research Systems{% endblock %}
+{% block meta_description %}Prithish Ray — equity investment analyst building AI tools for fundamental research workflows. Python, Flask, Groq, prompt engineering, Render deployment.{% endblock %}
+
+{% block content %}
+
+<!-- About Hero -->
+<div class="about-hero">
+  <div class="container">
+    <div class="section-label">About</div>
+    <h1>Prithish Ray</h1>
+    <p>
+      Equity investment analyst building AI tools for fundamental research workflows.
+      I convert real analyst processes into structured, auditable, decision-useful systems —
+      and deploy them.
+    </p>
+  </div>
+</div>
+
+<!-- Main About Content -->
+<section class="section">
+  <div class="container">
+    <div class="row gy-5">
+      <div class="col-lg-7">
+
+        <!-- Background -->
+        <div class="detail-section">
+          <div class="detail-section-label">Background</div>
+          <h2>Investment Research Foundation</h2>
+          <p>
+            My background is in fundamental equity research: company analysis, financial
+            statement analysis, valuation, competitive positioning, and investment thesis
+            construction. This is not a background in general machine learning or software
+            engineering — it is a background in the specific analytical problems that
+            AI tools need to solve to be genuinely useful in an investment context.
+          </p>
+          <p>
+            That distinction matters. Most AI tools applied to investing are built by
+            engineers who do not understand the research workflow. The result is tools
+            that are technically functional but intellectually shallow — they produce
+            fluent text without addressing the real bottlenecks: structured judgement,
+            assumption tracking, source discipline, and decision auditability.
+          </p>
+          <p>
+            I build tools that address those bottlenecks because I have experienced them
+            as an analyst.
+          </p>
+        </div>
+
+        <!-- What I Build -->
+        <div class="detail-section">
+          <div class="detail-section-label">Work</div>
+          <h2>What I Build</h2>
+          <p>
+            AI-assisted research systems: tools that embed structured investment frameworks
+            into LLM workflows, enforce source discipline, surface limitations, and produce
+            outputs that analysts can actually use and audit — rather than outputs they must
+            simply trust.
+          </p>
+          <p>
+            Every tool I build is deployed, version-controlled, and documented. I ship to
+            Render from GitHub. I use Python, Flask, FastAPI, Groq, and Tavily. I write
+            structured prompt chains, not single-shot LLM queries. I build for
+            repeatability, not demos.
+          </p>
+        </div>
+
+        <!-- Positioning -->
+        <div class="detail-section">
+          <div class="detail-section-label">Positioning</div>
+          <h2>How I Think About AI in Investment Research</h2>
+          <p>
+            AI does not solve the hard problem in equity research. The hard problem is
+            structured judgement under uncertainty, with accountability for the decision.
+            AI solves a different problem: it reduces the cost of information retrieval,
+            pattern recognition, and first-draft synthesis.
+          </p>
+          <p>
+            The risk is not that AI makes analysts lazy. The risk is that AI makes
+            plausible-sounding outputs so cheap to produce that analysts stop interrogating
+            them. The tools I build are designed to resist that failure mode: they surface
+            sources, flag uncertainty, separate retrieval from reasoning, and always label
+            outputs as requiring analyst review.
+          </p>
+          <p>
+            I am not positioning these tools as investment advice engines. I am building
+            research workflow infrastructure — the equivalent of a well-designed checklist
+            or research template, but automated and auditable.
+          </p>
+        </div>
+
+      </div><!-- /col -->
+
+      <!-- Sidebar / Capabilities -->
+      <div class="col-lg-5">
+
+        <div style="position: sticky; top: 80px;">
+
+          <!-- Capabilities -->
+          <div class="sidebar-card" style="margin-bottom:1rem;">
+            <h5>Investment Capabilities</h5>
+            <div class="capabilities-grid" style="grid-template-columns: 1fr; gap: 0.6rem; margin-top: 0.5rem;">
+              <div class="capability-item">
+                <h4>Fundamental Equity Research</h4>
+                <p>Company analysis, financial modelling, competitive moat assessment, valuation frameworks.</p>
+              </div>
+              <div class="capability-item">
+                <h4>Investment Framework Design</h4>
+                <p>Thesis formalisation, assumption tracking, kill-switch conditions, variant perception.</p>
+              </div>
+              <div class="capability-item">
+                <h4>Behavioural Guardrails</h4>
+                <p>Anchoring prevention, thesis drift detection, structured exit discipline.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="sidebar-card" style="margin-bottom:1rem;">
+            <h5>Technical Capabilities</h5>
+            <div class="capabilities-grid" style="grid-template-columns: 1fr; gap: 0.6rem; margin-top: 0.5rem;">
+              <div class="capability-item">
+                <h4>AI-Assisted Research Systems</h4>
+                <p>Prompt chain design, LLM API integration (Groq), structured output enforcement.</p>
+              </div>
+              <div class="capability-item">
+                <h4>Python Deployment</h4>
+                <p>Flask, FastAPI, Gunicorn, Render, GitHub, environment variable management.</p>
+              </div>
+              <div class="capability-item">
+                <h4>Research Process Design</h4>
+                <p>Workflow decomposition, tool specification, auditability architecture.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact -->
+          <div class="sidebar-card" id="contact">
+            <h5>Contact</h5>
+            <a href="mailto:prithishray@gmail.com" class="sidebar-link">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383-4.708 2.825L15 11.105V5.383zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741zM1 11.105l4.708-2.897L1 5.383v5.722z"/>
+              </svg>
+              prithishray@gmail.com
+            </a>
+            <a href="https://github.com/prithish-ray" target="_blank" rel="noopener" class="sidebar-link">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+              </svg>
+              GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/prithishray" target="_blank" rel="noopener" class="sidebar-link">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
+              </svg>
+              LinkedIn
+            </a>
+            <a href="https://qualitycompounder.substack.com/" target="_blank" rel="noopener" class="sidebar-link">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M15 3.604H1v1.891h14v-1.89zM1 7.208V16l7-3.926L15 16V7.208H1zM15 0H1v1.89h14V0z"/>
+              </svg>
+              Substack — Quality Compounder
+            </a>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}

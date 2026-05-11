@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Build Log — Prithish Ray AI Research Systems{% endblock %}
+{% block meta_description %}A chronological log of AI investment research tools built and deployed by Prithish Ray. Stack, problem, and status for each build.{% endblock %}
+
+{% block content %}
+
+<!-- Page Header -->
+<div class="page-header">
+  <div class="container">
+    <div class="section-label">Shipping Discipline</div>
+    <h1>Build Log</h1>
+    <p>
+      A chronological record of tools built and deployed. Each entry documents the problem
+      targeted, the stack used, and the current deployment status.
+    </p>
+  </div>
+</div>
+
+<!-- Build Log Entries -->
+<section class="section">
+  <div class="container">
+    <div style="max-width: 760px;">
+
+      {% if builds %}
+        {% for build in builds %}
+        <div class="build-log-entry">
+          <div class="build-log-date">{{ build.date }}</div>
+          <div class="d-flex align-items-start justify-content-between gap-2 mb-2">
+            <h3>{{ build.tool_name }}</h3>
+            <span class="status-badge status-{{ build.status | lower }}">{{ build.status }}</span>
+          </div>
+          <p>{{ build.problem_solved }}</p>
+          {% if build.notes %}
+          <p style="font-size:0.82rem; color:var(--text-light); border-left:2px solid var(--border); padding-left:0.75rem; margin-bottom:0.75rem; font-style:italic;">
+            {{ build.notes }}
+          </p>
+          {% endif %}
+          <div class="build-log-tags">
+            {% for item in build.stack %}
+            <span class="tag">{{ item }}</span>
+            {% endfor %}
+          </div>
+          {% if build.slug %}
+          <a href="{{ url_for('tool_detail', slug=build.slug) }}" class="btn-sm-outline" style="font-size:0.78rem;">
+            View tool details &rarr;
+          </a>
+          {% endif %}
+        </div>
+        {% endfor %}
+      {% else %}
+        <p style="color:var(--text-muted);">No build log entries yet.</p>
+      {% endif %}
+
+    </div>
+  </div>
+</section>
+
+<!-- Velocity note -->
+<div class="section-alt" style="padding:28px 0;">
+  <div class="container">
+    <p style="font-size:0.85rem; color:var(--text-muted); max-width:600px; margin:0;">
+      Building and deploying 2–3 new tools per week. Each tool addresses a specific,
+      observed friction point in the equity research process. See the
+      <a href="{{ url_for('tools') }}">tools index</a> for the full list.
+    </p>
+  </div>
+</div>
+
+{% endblock %}

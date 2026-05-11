@@ -1,0 +1,244 @@
+{% extends "base.html" %}
+
+{% block title %}{{ tool.name }} — Prithish Ray AI Research Systems{% endblock %}
+{% block meta_description %}{{ tool.one_line }}{% endblock %}
+
+{% block content %}
+
+<!-- Tool Header -->
+<div class="tool-detail-header">
+  <div class="container">
+    <div class="breadcrumb-nav">
+      <a href="{{ url_for('index') }}">Home</a>
+      <span class="breadcrumb-sep">/</span>
+      <a href="{{ url_for('tools') }}">Tools</a>
+      <span class="breadcrumb-sep">/</span>
+      <span style="color:rgba(255,255,255,0.75);">{{ tool.name }}</span>
+    </div>
+    <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+      <span class="status-badge status-{{ tool.status | lower }}">{{ tool.status }}</span>
+      <span class="tag tag-navy">{{ tool.workflow_stage }}</span>
+      <span class="tag tag-navy">{{ tool.category }}</span>
+    </div>
+    <h1>{{ tool.name }}</h1>
+    <p class="lead">{{ tool.one_line }}</p>
+    <div class="d-flex flex-wrap gap-2">
+      {% if tool.live_demo_url %}
+      <a href="{{ tool.live_demo_url }}" target="_blank" rel="noopener" class="btn-primary-inv">Live Demo</a>
+      {% endif %}
+      {% if tool.github_url %}
+      <a href="{{ tool.github_url }}" target="_blank" rel="noopener" class="btn-outline-inv">GitHub Repo</a>
+      {% endif %}
+      {% if tool.demo_video_url %}
+      <a href="{{ tool.demo_video_url }}" target="_blank" rel="noopener" class="btn-outline-inv">Demo Video</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<!-- Detail Body -->
+<section class="section">
+  <div class="container">
+    <div class="row gy-5">
+
+      <!-- Main content column -->
+      <div class="col-lg-8">
+
+        <!-- Problem -->
+        <div class="detail-section">
+          <div class="detail-section-label">Problem</div>
+          <h2>What problem does this solve?</h2>
+          <p>{{ tool.problem }}</p>
+          {% if tool.research_workflow_pain_point %}
+          <p style="color:var(--text-muted); font-size:0.9rem; border-left:3px solid var(--border); padding-left:1rem; margin-top:1rem;">
+            <strong>Workflow pain point:</strong> {{ tool.research_workflow_pain_point }}
+          </p>
+          {% endif %}
+        </div>
+
+        <!-- Target User -->
+        <div class="detail-section">
+          <div class="detail-section-label">Target User</div>
+          <h2>Who is this for?</h2>
+          <p>{{ tool.target_user }}</p>
+        </div>
+
+        <!-- What it does -->
+        <div class="detail-section">
+          <div class="detail-section-label">Functionality</div>
+          <h2>What the tool does</h2>
+          <p>{{ tool.what_it_does }}</p>
+
+          {% if tool.features %}
+          <h3 style="font-size:0.9rem; font-weight:700; margin-top:1.5rem; margin-bottom:0.75rem; color:var(--text-muted); letter-spacing:0.05em; text-transform:uppercase;">Key features</h3>
+          <ul class="features-list">
+            {% for feat in tool.features %}
+            <li>{{ feat }}</li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </div>
+
+        <!-- Example I/O -->
+        <div class="detail-section">
+          <div class="detail-section-label">Example</div>
+          <h2>Input and output</h2>
+          {% if tool.example_input %}
+          <h3 style="font-size:0.8rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-light); margin-bottom:0.5rem;">Example input</h3>
+          <div class="example-block" style="margin-bottom:1.25rem;">{{ tool.example_input }}</div>
+          {% endif %}
+          {% if tool.example_output %}
+          <h3 style="font-size:0.8rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-light); margin-bottom:0.5rem;">Example output</h3>
+          <div class="example-block">{{ tool.example_output }}</div>
+          <p style="font-size:0.75rem; color:var(--text-light); margin-top:0.5rem;">
+            Illustrative example. Actual outputs will vary. LLM outputs require analyst review.
+          </p>
+          {% endif %}
+        </div>
+
+        <!-- Investment concepts -->
+        {% if tool.investment_concepts %}
+        <div class="detail-section">
+          <div class="detail-section-label">Investment Frameworks</div>
+          <h2>Investment concepts used</h2>
+          <div class="d-flex flex-wrap gap-2">
+            {% for concept in tool.investment_concepts %}
+            <span class="tag tag-navy">{{ concept }}</span>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- Architecture -->
+        {% if tool.technical_architecture %}
+        <div class="detail-section">
+          <div class="detail-section-label">Technical Design</div>
+          <h2>Architecture</h2>
+          <p>{{ tool.technical_architecture }}</p>
+        </div>
+        {% endif %}
+
+        <!-- Screenshots placeholder -->
+        {% if tool.screenshot_paths %}
+        <div class="detail-section">
+          <div class="detail-section-label">Screenshots</div>
+          <h2>Screenshots</h2>
+          <div class="row g-2">
+            {% for path in tool.screenshot_paths %}
+            <div class="col-md-6">
+              <img src="{{ url_for('static', filename=path) }}" class="img-fluid"
+                   style="border:1px solid var(--border); border-radius:var(--radius-card);"
+                   alt="Screenshot of {{ tool.name }}">
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- Limitations -->
+        {% if tool.limitations %}
+        <div class="detail-section">
+          <div class="detail-section-label">Intellectual Honesty</div>
+          <h2>Limitations</h2>
+          <ul class="limitations-list">
+            {% for lim in tool.limitations %}
+            <li>{{ lim }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+
+        <!-- Next improvements -->
+        {% if tool.next_steps %}
+        <div class="detail-section">
+          <div class="detail-section-label">Roadmap</div>
+          <h2>Next improvements</h2>
+          <ul class="limitations-list" style="--warn: var(--navy-light);">
+            {% for step in tool.next_steps %}
+            <li style="--warn: var(--accent);">{{ step }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+
+        <!-- Employer signal -->
+        {% if tool.employer_signal %}
+        <div class="detail-section" style="border-bottom:none;">
+          <div class="detail-section-label">Signal</div>
+          <h2>What this demonstrates</h2>
+          <div class="employer-signal-box">
+            <p>{{ tool.employer_signal }}</p>
+          </div>
+        </div>
+        {% endif %}
+
+      </div><!-- /col -->
+
+      <!-- Sidebar -->
+      <div class="col-lg-4">
+        <div class="detail-sidebar">
+
+          <!-- Links -->
+          <div class="sidebar-card">
+            <h5>Links</h5>
+            {% if tool.live_demo_url %}
+            <a href="{{ tool.live_demo_url }}" target="_blank" rel="noopener" class="sidebar-link">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm5.904-4.803a.5.5 0 0 0-.5.5v8.606a.5.5 0 0 0 .776.416l6.5-4.303a.5.5 0 0 0 0-.832l-6.5-4.303a.5.5 0 0 0-.276-.084z"/>
+              </svg>
+              Live Demo
+            </a>
+            {% endif %}
+            {% if tool.github_url %}
+            <a href="{{ tool.github_url }}" target="_blank" rel="noopener" class="sidebar-link">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+              </svg>
+              GitHub Repo
+            </a>
+            {% endif %}
+            {% if tool.demo_video_url %}
+            <a href="{{ tool.demo_video_url }}" target="_blank" rel="noopener" class="sidebar-link">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z"/>
+                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+              </svg>
+              Demo Video
+            </a>
+            {% endif %}
+          </div>
+
+          <!-- Stack -->
+          {% if tool.stack %}
+          <div class="sidebar-card">
+            <h5>Stack</h5>
+            <div class="d-flex flex-wrap gap-1">
+              {% for item in tool.stack %}
+              <span class="tag">{{ item }}</span>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+
+          <!-- Status -->
+          <div class="sidebar-card">
+            <h5>Status</h5>
+            <span class="status-badge status-{{ tool.status | lower }}">{{ tool.status }}</span>
+            <p style="font-size:0.8rem; color:var(--text-muted); margin-top:0.75rem; margin-bottom:0;">
+              Deployed on Render. Available via live demo link.
+            </p>
+          </div>
+
+          <!-- Back to tools -->
+          <a href="{{ url_for('tools') }}" class="btn-sm-outline d-block text-center mt-2">
+            &larr; All Tools
+          </a>
+
+        </div>
+      </div>
+
+    </div><!-- /row -->
+  </div><!-- /container -->
+</section>
+
+{% endblock %}

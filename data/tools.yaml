@@ -1,0 +1,333 @@
+- name: "Company Research Tool"
+  slug: "company-research-tool"
+  status: "Live"
+  featured: true
+  category: "Company Analysis"
+  workflow_stage: "Thesis Extraction"
+  one_line: "Generates structured, source-linked company research notes from a ticker or name input."
+  problem: >
+    Analysts spend significant time assembling basic company context before they can begin
+    substantive thesis work. LLMs can produce fluent company summaries, but without
+    structure or source discipline the outputs are hard to audit and easy to misuse.
+  target_user: >
+    Equity analysts, portfolio managers, and research teams who need a reliable starting
+    point for a new company before committing time to deep fundamental work.
+  research_workflow_pain_point: >
+    The first 30 minutes on any new name involves assembling the same building blocks:
+    business description, revenue model, key competitors, end markets, and risk factors.
+    This is high-effort, low-differentiation work that a structured AI tool can accelerate
+    without replacing judgement.
+  what_it_does: >
+    Accepts a company name or ticker. Calls a search API (Tavily) to retrieve current
+    source-linked context. Passes results through a structured prompt chain that extracts:
+    business model, revenue breakdown, competitive positioning, key risks, and a short
+    analyst summary. Returns a formatted, section-separated research note with source
+    citations. Outputs are explicitly labelled as research workflow aids, not investment
+    recommendations.
+  example_input: "ASML Holding NV"
+  example_output: >
+    Business Model: ASML is the sole manufacturer of EUV lithography systems, which are
+    essential for producing leading-edge semiconductors at 7nm and below. Revenue is
+    predominantly system sales (c.70%) and aftermarket services (c.30%).
+    Key End Markets: Logic (Intel, TSMC, Samsung), Memory (Micron, SK Hynix).
+    Competitive Moat: Single-source supplier with 20+ year technology lead and a
+    high-switching-cost installed base. No credible competitor in EUV.
+    Key Risks: Geopolitical export controls (China revenue ~15%), customer capex
+    cyclicality, and technology roadmap execution risk.
+    [Sources: ASML 2023 Annual Report, Bloomberg, Reuters 2024-03-12]
+  investment_concepts:
+    - "Competitive moat analysis"
+    - "Revenue model decomposition"
+    - "End-market exposure mapping"
+    - "Key risk identification"
+    - "Porter's Five Forces (implicit)"
+  technical_architecture: >
+    Flask web application. User submits a ticker/name via a form. Flask route calls
+    the Tavily Search API to retrieve current, source-linked web context. Retrieved
+    context is injected into a structured prompt template. Prompt is sent to a Groq-hosted
+    LLM (Llama 3 or Mixtral). Response is parsed and rendered in a structured HTML output.
+    No data is stored between sessions. All sources displayed alongside output.
+  stack:
+    - "Python"
+    - "Flask"
+    - "Groq API"
+    - "Tavily Search API"
+    - "Jinja2"
+    - "Bootstrap"
+    - "Render"
+  features:
+    - "Single-input research note generation"
+    - "Source citation for every claim"
+    - "Structured output sections (model, risks, comps)"
+    - "Plain-language analyst summary"
+  limitations:
+    - "LLM outputs may contain factual errors; analyst review is required before use."
+    - "Tavily search results reflect public web content, not proprietary databases."
+    - "Financial figures may be stale; always verify against primary filings."
+    - "Not a substitute for earnings call review, channel checks, or expert interviews."
+    - "Does not access Bloomberg, FactSet, or any licensed data source."
+  next_steps:
+    - "Add PDF export of research note"
+    - "Allow filing upload (10-K, annual report) for document-grounded analysis"
+    - "Add peer comparison table generation"
+    - "Flag confidence level per section"
+  live_demo_url: "https://company-research-tool-a011.onrender.com/"
+  github_url: "https://github.com/prithish-ray/company-research-tool"
+  demo_video_url: ""
+  screenshot_paths: []
+  employer_signal: >
+    Demonstrates understanding of the equity research workflow, structured prompt design,
+    LLM API integration, source discipline, and production deployment on Render.
+
+- name: "Portfolio News Monitor"
+  slug: "portfolio-news-monitor"
+  status: "Live"
+  featured: true
+  category: "News Surveillance"
+  workflow_stage: "News / Document Monitoring"
+  one_line: "Monitors live news for a portfolio of holdings and surfaces material developments by company."
+  problem: >
+    Portfolio managers and analysts with 20-40 holdings cannot manually monitor news
+    flow across all positions in real time. Material developments are missed or caught
+    late. Generic news aggregators produce noise without investment-specific relevance
+    filtering.
+  target_user: >
+    Portfolio managers, sell-side analysts, and research associates covering a defined
+    universe of equities.
+  research_workflow_pain_point: >
+    Daily news monitoring is high-frequency, low-judgement work until a material item
+    appears — at which point fast identification is critical. The challenge is building
+    a tool that filters signal from noise without requiring the analyst to review every
+    headline.
+  what_it_does: >
+    Accepts a list of tickers or company names. For each holding, queries the Tavily
+    Search API for recent news. Passes results through a relevance-filtering prompt that
+    scores each item against a set of materiality criteria (earnings, guidance, M&A,
+    regulatory, management change, competitive threat). Returns a ranked digest by company,
+    with source links and a short analyst-facing summary for each item flagged as
+    potentially material.
+  example_input: "MSFT, NVDA, ASML, MC.PA, 7203.T"
+  example_output: >
+    NVDA — HIGH PRIORITY: Multiple sources report US government reviewing new chip export
+    restrictions targeting H100 shipments to Southeast Asia. Potential revenue impact
+    on datacentre segment. [Reuters 2024-04-02, FT 2024-04-02]
+    ASML — MEDIUM: CEO comments at investor day reiterate 2025 revenue guidance range.
+    No material change to consensus view. [Bloomberg 2024-04-01]
+    MSFT — LOW: Office 365 pricing change announced in APAC markets. Modest impact.
+  investment_concepts:
+    - "Materiality assessment"
+    - "Event-driven monitoring"
+    - "Portfolio-level surveillance"
+    - "News relevance scoring"
+  technical_architecture: >
+    Flask application. User submits a comma-separated ticker list. For each ticker,
+    an async call to Tavily Search API retrieves recent news headlines and snippets.
+    Results are batched and passed to a Groq LLM with a materiality-scoring prompt.
+    Output is sorted by materiality score and rendered as a structured digest. Session
+    data is not persisted.
+  stack:
+    - "Python"
+    - "Flask"
+    - "Groq API"
+    - "Tavily Search API"
+    - "Jinja2"
+    - "Bootstrap"
+    - "Render"
+  features:
+    - "Multi-ticker batch news retrieval"
+    - "Materiality scoring per news item"
+    - "Source links for every flagged item"
+    - "Priority-sorted digest output"
+  limitations:
+    - "Coverage limited to publicly available web news; no wire service or licensed feed."
+    - "Materiality scoring is LLM-generated and requires analyst confirmation."
+    - "Does not track price impact or correlate news to intraday moves."
+    - "No persistent watchlist; positions must be re-entered each session."
+    - "Latency on large portfolios due to sequential API calls."
+  next_steps:
+    - "Persistent watchlist stored in a lightweight database"
+    - "Scheduled daily digest via email"
+    - "Integration with a licensed news feed"
+    - "Price-move correlation to flag news-driven moves"
+  live_demo_url: "https://portfolio-news-monitor.onrender.com"
+  github_url: "https://github.com/prithish-ray/portfolio-news-monitor"
+  demo_video_url: ""
+  screenshot_paths: []
+  employer_signal: >
+    Demonstrates portfolio-level thinking, event-driven workflow design, prompt-based
+    relevance filtering, and the ability to build a practical daily-use research tool.
+
+- name: "Stock Thesis Commit + Delta Monitor"
+  slug: "thesis-monitor"
+  status: "Live"
+  featured: true
+  category: "Thesis Management"
+  workflow_stage: "Thesis Extraction"
+  one_line: "Records a formalised investment thesis and monitors for news that challenges or confirms its key assumptions."
+  problem: >
+    Analysts rarely write down the explicit assumptions underpinning a position at the
+    time of initiation. When facts change, it is unclear whether the original thesis is
+    intact or has been violated. This leads to anchoring bias, thesis drift, and positions
+    being held beyond their logical validity.
+  target_user: >
+    Portfolio managers and analysts who want to formalise thesis discipline, reduce
+    anchoring bias, and track thesis integrity over the life of a position.
+  research_workflow_pain_point: >
+    The failure mode is not usually a missed fact — it is a failure to recognise that
+    a key assumption has changed. A tool that captures the thesis at initiation and then
+    monitors specifically for thesis-invalidating news addresses a genuine decision-quality
+    problem.
+  what_it_does: >
+    In Commit mode: user inputs a structured investment thesis (bull case, bear case,
+    key assumptions, price target rationale, exit conditions). The tool formats and
+    timestamps this as a thesis record.
+    In Monitor mode: the tool queries for recent news on the position and uses a prompt
+    chain to assess whether any item materially challenges a recorded assumption. Outputs
+    a delta assessment: thesis intact / thesis stressed / thesis broken, with the specific
+    assumption(s) implicated.
+  example_input: >
+    Company: LVMH | Bull case: Chinese luxury demand recovery drives organic growth
+    reacceleration to 8-10% in H2 2024 | Key assumption: China GDP holds above 4.5%,
+    no new austerity messaging | Exit condition: Two consecutive quarters of organic
+    growth below 5%
+  example_output: >
+    THESIS STATUS: STRESSED
+    Assumption under pressure: China GDP and consumer sentiment assumptions.
+    Trigger: Multiple sources report Chinese government guidance discouraging conspicuous
+    luxury consumption ahead of party congress. Organic growth consensus revised from
+    8% to 5.5% by three brokers in past 30 days.
+    Recommendation: Review exit condition; consider whether H2 thesis still holds.
+    [Sources: FT, Bloomberg, sell-side consensus trackers]
+  investment_concepts:
+    - "Investment thesis formalisation"
+    - "Assumption-based monitoring"
+    - "Behavioural guardrails (anchoring prevention)"
+    - "Exit discipline"
+    - "Variant perception tracking"
+  technical_architecture: >
+    Flask application with two modes. Commit mode stores thesis inputs as a structured
+    JSON record (session-based or flat-file). Monitor mode retrieves current news via
+    Tavily, injects the stored thesis assumptions into a prompt, and asks the LLM to
+    assess whether any news item challenges a named assumption. Output includes an
+    explicit thesis status label and a structured rationale.
+  stack:
+    - "Python"
+    - "Flask"
+    - "Groq API"
+    - "Tavily Search API"
+    - "JSON"
+    - "Jinja2"
+    - "Bootstrap"
+    - "Render"
+  features:
+    - "Structured thesis commit with named assumptions"
+    - "Assumption-specific news monitoring"
+    - "Thesis status labelling (intact / stressed / broken)"
+    - "Timestamped thesis records"
+  limitations:
+    - "Thesis status assessment is LLM-generated; analyst must confirm before acting."
+    - "Does not access earnings call transcripts or broker research directly."
+    - "No persistent database in current version; thesis records are session-scoped."
+    - "Does not track position size, cost basis, or P&L alongside thesis."
+  next_steps:
+    - "Persistent thesis database with version history"
+    - "Automated scheduled monitoring with email alerts"
+    - "Peer comparison: monitor thesis assumptions across multiple positions simultaneously"
+    - "Integration with earnings transcript ingestion"
+  live_demo_url: "https://thesis-monitor.onrender.com"
+  github_url: "https://github.com/prithish-ray/thesis-monitor"
+  demo_video_url: ""
+  screenshot_paths: []
+  employer_signal: >
+    Demonstrates deep understanding of investment decision-quality problems, behavioural
+    finance awareness, structured prompt design, and the ability to build tools that
+    address real analyst workflow failures rather than generic AI use cases.
+
+- name: "Macro Signal to Stock Idea Generator"
+  slug: "macro-to-company"
+  status: "Live"
+  featured: true
+  category: "Idea Generation"
+  workflow_stage: "Idea Intake"
+  one_line: "Translates a macro or thematic signal into a structured list of equity screening candidates with rationale."
+  problem: >
+    Top-down idea generation — moving from a macro view to specific stock candidates —
+    is time-consuming and often unsystematic. Analysts either miss names outside their
+    coverage universe or rely on generic screeners that do not incorporate thematic
+    reasoning.
+  target_user: >
+    Portfolio managers and analysts who start from a macro or thematic view and need
+    a structured, reasoned first pass at the equity opportunity set.
+  research_workflow_pain_point: >
+    The gap between a macro call ("rates staying higher for longer") and a stock list
+    ("which equities benefit?") is where significant analytical time is spent. A tool
+    that bridges this gap with structured reasoning and explicit rationale accelerates
+    the top-down research process.
+  what_it_does: >
+    User inputs a macro signal or thematic view (e.g., "US reshoring of semiconductor
+    manufacturing accelerating"). The tool uses a multi-step prompt chain to: (1) identify
+    the primary economic transmission mechanisms, (2) map these to sectors and sub-sectors,
+    (3) generate a list of equity candidates with explicit beneficiary / risk rationale,
+    (4) flag the key risks to the theme. Output is a structured screening memo, not a
+    buy list.
+  example_input: "Rising AI infrastructure capex cycle — which non-semiconductor equities benefit?"
+  example_output: >
+    Theme: AI infrastructure capex cycle
+    Transmission mechanism: Data centre construction, power infrastructure, cooling systems,
+    networking hardware, speciality chemicals.
+    Equity candidates:
+    — Vertiv Holdings (VRT): Power management and thermal for data centres. Direct
+      capex beneficiary. Watch: customer concentration.
+    — Eaton Corporation (ETN): Electrical infrastructure, UPS systems. Broader exposure
+      reduces single-theme sensitivity.
+    — Vistra Energy (VST): Power generation capacity needed for data centre load growth.
+      Structural beneficiary of AI power demand.
+    — Linde PLC (LIN): Industrial gases for fab construction and chip manufacturing.
+    Risks to theme: Capex slowdown by hyperscalers, energy grid constraints, geopolitical
+    disruption to supply chain.
+    Note: This is a research workflow output, not an investment recommendation.
+  investment_concepts:
+    - "Top-down / macro-to-micro framework"
+    - "Economic transmission mechanism analysis"
+    - "Sector and sub-sector mapping"
+    - "Thematic idea generation"
+    - "Risk identification"
+  technical_architecture: >
+    Flask application. User submits a macro/thematic prompt. A multi-step prompt chain
+    is executed via the Groq API: step 1 extracts transmission mechanisms, step 2 maps
+    to sectors, step 3 generates equity candidates with rationale, step 4 identifies
+    theme risks. Tavily may be called to ground sector context in current sources.
+    Output is a structured research memo rendered in HTML.
+  stack:
+    - "Python"
+    - "Flask"
+    - "Groq API"
+    - "Tavily Search API"
+    - "Prompt chaining"
+    - "Jinja2"
+    - "Bootstrap"
+    - "Render"
+  features:
+    - "Multi-step prompt chain (macro → sector → equities)"
+    - "Explicit transmission mechanism reasoning"
+    - "Structured screening memo output"
+    - "Theme risk section"
+  limitations:
+    - "Output is a reasoning exercise, not a fundamental screen; no financial data is used."
+    - "LLM may surface well-known names; less useful for uncovering obscure beneficiaries."
+    - "Does not validate that suggested companies actually have the claimed exposure."
+    - "Requires analyst follow-through with financial data and primary research."
+    - "Thematic reasoning quality is sensitive to prompt specificity."
+  next_steps:
+    - "Connect output to a screening database to validate revenue exposure"
+    - "Add ability to stress-test the theme (what kills this thesis?)"
+    - "Generate a structured template for deeper work on each candidate"
+    - "Allow user to refine transmission mechanisms before generating equity list"
+  live_demo_url: "https://macro-to-company.onrender.com"
+  github_url: "https://github.com/prithish-ray/signal-to-stock"
+  demo_video_url: ""
+  screenshot_paths: []
+  employer_signal: >
+    Demonstrates top-down investment framework knowledge, multi-step prompt chain
+    design, structured reasoning output, and the ability to build tools that address
+    the macro-to-micro translation problem in real research workflows.

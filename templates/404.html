@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Page Not Found — Prithish Ray{% endblock %}
+{% block content %}
+<div class="container error-page">
+  <h1>404</h1>
+  <h2>Page not found</h2>
+  <p>The tool or page you are looking for does not exist, or the URL has changed.</p>
+  <div class="d-flex gap-2 justify-content-center">
+    <a href="{{ url_for('index') }}" class="btn-sm-navy">Go to Home</a>
+    <a href="{{ url_for('tools') }}" class="btn-sm-outline">View All Tools</a>
+  </div>
+</div>
+{% endblock %}

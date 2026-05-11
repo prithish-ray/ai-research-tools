@@ -1,0 +1,242 @@
+{% extends "base.html" %}
+
+{% block title %}Prithish Ray — AI Investment Research Systems{% endblock %}
+
+{% block content %}
+
+<!-- ============================================================ HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-label">Investment Research + AI Systems</div>
+    <h1>AI Investment<br>Research Systems</h1>
+    <p class="lead">
+      I build and deploy AI tools for equity research workflows: thesis monitoring,
+      red-team analysis, document triage, behavioural guardrails, and portfolio
+      news surveillance.
+    </p>
+    <div class="d-flex flex-wrap gap-2">
+      <a href="{{ url_for('tools') }}" class="btn-primary-inv">View Tools</a>
+      <a href="https://github.com/prithish-ray" target="_blank" rel="noopener" class="btn-outline-inv">View GitHub</a>
+      <a href="https://qualitycompounder.substack.com/" target="_blank" rel="noopener" class="btn-outline-inv">Substack</a>
+      <a href="{{ url_for('about') }}#contact" class="btn-outline-inv">Contact</a>
+    </div>
+    <p class="hero-disclaimer">
+      Research workflow aids only. Tools do not produce investment advice or
+      recommendations. All outputs require analyst review. No licensed financial
+      data is used. See disclaimer below.
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================ FEATURED TOOLS -->
+{% if featured %}
+<section class="section">
+  <div class="container">
+    <div class="section-label">Deployed Tools</div>
+    <h2 class="section-title">Research Systems</h2>
+    <p class="section-subtitle">
+      Each tool targets a specific bottleneck in the equity research process.
+      All are live and deployed on Render.
+    </p>
+    <div class="row g-3">
+      {% for tool in featured %}
+      <div class="col-md-6 col-lg-3">
+        <div class="tool-card">
+          <div class="tool-card-header">
+            <h3>{{ tool.name }}</h3>
+            <span class="status-badge status-{{ tool.status | lower }}">{{ tool.status }}</span>
+          </div>
+          <div class="tool-card-meta">{{ tool.workflow_stage }} &middot; {{ tool.category }}</div>
+          <p>{{ tool.one_line }}</p>
+          <div class="tool-card-tags">
+            {% for item in tool.stack[:4] %}
+            <span class="tag">{{ item }}</span>
+            {% endfor %}
+          </div>
+          <div class="tool-card-actions">
+            {% if tool.live_demo_url %}
+            <a href="{{ tool.live_demo_url }}" target="_blank" rel="noopener" class="btn-sm-navy">Live Demo</a>
+            {% endif %}
+            <a href="{{ url_for('tool_detail', slug=tool.slug) }}" class="btn-sm-outline">Details</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="mt-4">
+      <a href="{{ url_for('tools') }}" class="btn-sm-outline">View all tools &rarr;</a>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<hr class="section-divider">
+
+<!-- ============================================================ WORKFLOW MAP -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-label">Research Process</div>
+    <h2 class="section-title">Workflow Map</h2>
+    <p class="section-subtitle">
+      Tools are mapped to the stages of a fundamental equity research workflow —
+      from first idea intake through to portfolio-level review and kill-switch discipline.
+    </p>
+    <div class="workflow-grid">
+      {% for stage in workflow_stages %}
+      {% set num = loop.index %}
+      <div class="workflow-stage">
+        <div class="workflow-stage-number">Stage {{ '%02d' % num }}</div>
+        <h4>{{ stage }}</h4>
+        {% set stage_tools = stage_map.get(stage, []) %}
+        {% if stage_tools %}
+          {% for tool in stage_tools %}
+          <a class="workflow-tool-link" href="{{ url_for('tool_detail', slug=tool.slug) }}">
+            {{ tool.name }}
+          </a>
+          {% endfor %}
+        {% else %}
+          <span class="workflow-empty">In development</span>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ============================================================ WHY THIS MATTERS -->
+<section class="section">
+  <div class="container">
+    <div class="section-label">Context</div>
+    <h2 class="section-title">Why This Matters</h2>
+    <p class="section-subtitle">
+      AI does not solve the hard problem in investment research. The hard problem is
+      structured judgement, auditability, and decision discipline. These tools are built
+      around that reality.
+    </p>
+    <div class="rationale-grid">
+      <div class="rationale-item">
+        <h4>Too many plausible answers</h4>
+        <p>
+          LLMs produce fluent, confident text regardless of whether the underlying
+          reasoning is sound. In investment research, plausible is not the same as
+          correct. The bottleneck has shifted from information access to output
+          evaluation.
+        </p>
+      </div>
+      <div class="rationale-item">
+        <h4>Auditability is not optional</h4>
+        <p>
+          Research decisions need to be traceable. Every tool in this system is designed
+          to surface sources, flag confidence, and separate retrieval from reasoning —
+          so the analyst can verify rather than simply accept.
+        </p>
+      </div>
+      <div class="rationale-item">
+        <h4>Workflows, not point answers</h4>
+        <p>
+          A single LLM prompt is not an investment research process. These tools embed
+          structured workflows: thesis formalisation, assumption monitoring, staged
+          filtering, and explicit kill-switch conditions.
+        </p>
+      </div>
+      <div class="rationale-item">
+        <h4>Hallucination risk is real</h4>
+        <p>
+          Every output on this site is labelled as a research aid requiring analyst
+          review. AI-generated financial content carries hallucination risk on
+          figures, dates, and attributed quotes. Source discipline is built into
+          every tool.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ============================================================ TECH STACK -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-label">Technical Stack</div>
+    <h2 class="section-title">How These Tools Are Built</h2>
+    <p class="section-subtitle">
+      A consistent, production-oriented Python stack. Every tool is deployed, version-controlled,
+      and built for repeatability — not notebook prototypes.
+    </p>
+    <div class="row g-4 mt-1">
+      <div class="col-md-6 col-lg-3">
+        <h5 style="font-size:0.8rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-light); margin-bottom:0.75rem;">Application</h5>
+        <div class="stack-grid">
+          <span class="stack-item">Python</span>
+          <span class="stack-item">Flask</span>
+          <span class="stack-item">FastAPI</span>
+          <span class="stack-item">Jinja2</span>
+          <span class="stack-item">Gunicorn</span>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3">
+        <h5 style="font-size:0.8rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-light); margin-bottom:0.75rem;">AI / LLM</h5>
+        <div class="stack-grid">
+          <span class="stack-item">Groq API</span>
+          <span class="stack-item">Llama 3</span>
+          <span class="stack-item">Mixtral</span>
+          <span class="stack-item">Prompt chaining</span>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3">
+        <h5 style="font-size:0.8rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-light); margin-bottom:0.75rem;">Search / Data</h5>
+        <div class="stack-grid">
+          <span class="stack-item">Tavily API</span>
+          <span class="stack-item">YAML / JSON</span>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3">
+        <h5 style="font-size:0.8rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-light); margin-bottom:0.75rem;">Deployment</h5>
+        <div class="stack-grid">
+          <span class="stack-item">Render</span>
+          <span class="stack-item">GitHub</span>
+          <span class="stack-item">Environment vars</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ============================================================ RECENT BUILDS -->
+<section class="section">
+  <div class="container">
+    <div class="section-label">Shipping Discipline</div>
+    <h2 class="section-title">Recent Builds</h2>
+    <p class="section-subtitle">
+      Building and deploying 2–3 new tools per week. Each is a response to a
+      specific, observed friction point in the equity research process.
+    </p>
+    <div class="row g-3">
+      {% for tool in tools[:4] %}
+      <div class="col-md-6">
+        <div class="d-flex align-items-start gap-3 p-3" style="border:1px solid var(--border); border-radius:var(--radius-card); background:var(--bg);">
+          <div style="flex:1;">
+            <div style="font-size:0.75rem; color:var(--text-light); margin-bottom:0.2rem;">
+              {{ tool.workflow_stage }}
+            </div>
+            <h4 style="font-size:0.95rem; font-weight:600; margin-bottom:0.35rem;">{{ tool.name }}</h4>
+            <p style="font-size:0.85rem; color:var(--text-muted); margin:0;">{{ tool.one_line }}</p>
+          </div>
+          <div>
+            <span class="status-badge status-{{ tool.status | lower }}">{{ tool.status }}</span>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="mt-4">
+      <a href="{{ url_for('build_log') }}" class="btn-sm-outline">View full build log &rarr;</a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

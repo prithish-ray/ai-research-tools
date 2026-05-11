@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block title %}Tools — Prithish Ray AI Research Systems{% endblock %}
+{% block meta_description %}All AI investment research tools built and deployed by Prithish Ray. Equity research workflow automation using Python, Flask, Groq, and Tavily.{% endblock %}
+
+{% block content %}
+
+<!-- Page Header -->
+<div class="page-header">
+  <div class="container">
+    <div class="section-label">Research Systems</div>
+    <h1>AI Research Tools</h1>
+    <p>
+      Each tool targets a specific bottleneck in the equity research process.
+      All deployed on Render. All outputs require analyst review before use.
+    </p>
+  </div>
+</div>
+
+<!-- Tools Grid -->
+<section class="section">
+  <div class="container">
+
+    <!-- Filter Bar -->
+    <div class="filter-bar" id="filterBar">
+      <button class="filter-btn active" data-filter="all">All ({{ tools | length }})</button>
+      {% for cat in categories %}
+      <button class="filter-btn" data-filter="category-{{ cat | replace(' ', '-') | lower }}">{{ cat }}</button>
+      {% endfor %}
+      {% for stage in stages %}
+      <button class="filter-btn" data-filter="stage-{{ stage | replace(' ', '-') | replace('/', '-') | lower }}">{{ stage }}</button>
+      {% endfor %}
+    </div>
+
+    <!-- Cards -->
+    <div class="row g-3" id="toolsGrid">
+      {% for tool in tools %}
+      <div class="col-md-6 col-lg-4 tool-item"
+           data-category="{{ 'category-' + tool.category | replace(' ', '-') | lower }}"
+           data-stage="{{ 'stage-' + tool.workflow_stage | replace(' ', '-') | replace('/', '-') | lower }}">
+        <div class="tool-card">
+          <div class="tool-card-header">
+            <h3>{{ tool.name }}</h3>
+            <span class="status-badge status-{{ tool.status | lower }}">{{ tool.status }}</span>
+          </div>
+          <div class="tool-card-meta">
+            {{ tool.workflow_stage }} &middot; {{ tool.category }}
+          </div>
+          <p>{{ tool.one_line }}</p>
+          <div class="tool-card-tags">
+            {% for item in tool.stack %}
+            <span class="tag">{{ item }}</span>
+            {% endfor %}
+          </div>
+          <div class="tool-card-actions">
+            {% if tool.live_demo_url %}
+            <a href="{{ tool.live_demo_url }}" target="_blank" rel="noopener" class="btn-sm-navy">Live Demo</a>
+            {% endif %}
+            {% if tool.github_url %}
+            <a href="{{ tool.github_url }}" target="_blank" rel="noopener" class="btn-sm-outline">GitHub</a>
+            {% endif %}
+            <a href="{{ url_for('tool_detail', slug=tool.slug) }}" class="btn-sm-outline">Details &rarr;</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- No results message (hidden by default) -->
+    <div id="noResults" class="text-center py-5" style="display:none !important;">
+      <p style="color:var(--text-muted);">No tools match that filter.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- Disclaimer -->
+<div class="section-alt" style="padding: 28px 0;">
+  <div class="container">
+    <p style="font-size:0.8rem; color:var(--text-muted); max-width:720px; margin:0;">
+      <strong>Research workflow aids only.</strong>
+      All tools on this page generate outputs from large language models and publicly available web sources.
+      Outputs may contain errors or omissions and do not constitute investment advice, financial recommendations,
+      or solicitations of any kind. All outputs require independent analyst review before use in any
+      investment context.
+    </p>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const toolItems  = document.querySelectorAll('.tool-item');
+  const noResults  = document.getElementById('noResults');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const filter = btn.dataset.filter;
+      let visible = 0;
+
+      toolItems.forEach(item => {
+        if (
+          filter === 'all' ||
+          item.dataset.category === filter ||
+          item.dataset.stage === filter
+        ) {
+          item.style.display = '';
+          visible++;
+        } else {
+          item.style.display = 'none';
+        }
+      });
+
+      noResults.style.setProperty('display', visible === 0 ? 'block' : 'none', 'important');
+    });
+  });
+</script>
+{% endblock %}
