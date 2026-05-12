@@ -1,4 +1,4 @@
-- date: "2025-04-01"
+- date: "2025-04-30"
   tool_name: "Company Research Tool"
   slug: "company-research-tool"
   problem_solved: >
@@ -17,7 +17,7 @@
     used in subsequent tools. Key design decision: always surface sources alongside
     output to prevent uncritical LLM acceptance.
 
-- date: "2025-04-10"
+- date: "2025-05-08"
   tool_name: "Portfolio News Monitor"
   slug: "portfolio-news-monitor"
   problem_solved: >
@@ -36,7 +36,7 @@
     scoring prompt layer. Identified latency issue with sequential API calls —
     flagged for async refactor in next version.
 
-- date: "2025-04-22"
+- date: "2025-05-01"
   tool_name: "Stock Thesis Commit + Delta Monitor"
   slug: "thesis-monitor"
   problem_solved: >
@@ -55,7 +55,7 @@
     and assumption-specific prompt design. Session-scoped storage is a known limitation;
     persistent database is the primary next step.
 
-- date: "2025-05-05"
+- date: "2025-05-04"
   tool_name: "Macro Signal to Stock Idea Generator"
   slug: "macro-to-company"
   problem_solved: >
@@ -74,3 +74,22 @@
     First tool using an explicit multi-step prompt chain (macro decomposition → sector
     mapping → equity candidate generation → risk identification). Chain design proved
     significantly better than single-prompt equivalents for structured reasoning quality.
+
+- date: "2026-05-12"
+  tool_name: "Invert AI"
+  slug: "invert-ai"
+  problem_solved: >
+    Applied Charlie Munger's inversion mental model to investment decision-making.
+    Forces a structured pre-mortem before acting — surfaces failure modes, challenges
+    implicit assumptions, and counteracts confirmation bias at the point of highest conviction.
+  stack:
+    - "Python"
+    - "Flask"
+    - "Groq API"
+    - "Render"
+  status: "Live"
+  notes: >
+    First tool focused on decision quality rather than information retrieval. No external
+    search API required — inversion is pure reasoning over the user's stated thesis.
+    Deliberately stripped-back stack; the value is entirely in the prompt design and
+    the mental model it enforces.

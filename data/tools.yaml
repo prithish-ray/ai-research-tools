@@ -335,3 +335,95 @@
     Demonstrates top-down investment framework knowledge, multi-step prompt chain
     design, structured reasoning output, and the ability to build tools that address
     the macro-to-micro translation problem in real research workflows.
+
+- name: "Invert AI"
+  slug: "invert-ai"
+  status: "Live"
+  featured: true
+  category: "Decision Quality"
+  workflow_stage: "Behavioural Guardrails"
+  one_line: "Stress-tests any investment decision by running it through Charlie Munger's inversion framework before you act."
+  problem: >
+    Investors are naturally wired to build the bull case. Most pre-decision reviews
+    ask "why will this work?" rather than "how could this fail?" This confirmation
+    bias means downside risks are systematically underweighted at the point of commitment.
+  target_user: >
+    Portfolio managers and analysts who want to pressure-test a decision, stress-test
+    an investment thesis, or surface blind spots before committing capital.
+  research_workflow_pain_point: >
+    The moment of highest conviction is also the moment of highest risk of anchoring.
+    A structured inversion exercise — asking "what would have to be true for this to
+    go badly wrong?" — is a proven decision-quality technique that most analysts skip
+    under time pressure. A tool that forces this step adds genuine decision discipline.
+  what_it_does: >
+    User inputs a proposed decision or investment thesis. The tool applies Charlie
+    Munger's inversion mental model: instead of asking "how do I succeed?", it asks
+    "what would guarantee failure?" and works backwards. The tool generates a structured
+    inversion analysis: the explicit failure modes, the assumptions most likely to be
+    wrong, the conditions under which the decision looks catastrophically bad, and a
+    summary of what the analyst should be most worried about. Output is a structured
+    pre-mortem, not a recommendation.
+  example_input: "Buy LVMH ahead of Q2 earnings — bull case is Chinese luxury demand recovery driving organic growth reacceleration."
+  example_output: >
+    Inversion: How do you guarantee this trade fails?
+    — Chinese consumer confidence deteriorates further; luxury discretionary is cut
+      before aspirational goods. Organic growth misses even the revised consensus.
+    — LVMH management issues cautious H2 guidance; multiple compression offsets any
+      earnings beat.
+    — Macro: CNY weakens, reducing purchasing power for mainland buyers; Hong Kong
+      retail traffic does not recover as expected.
+    — Positioning: consensus is already long; a neutral print produces a sell-the-news
+      reaction.
+    — Structural: anti-corruption / anti-conspicuous-consumption messaging resurfaces
+      pre-Party Congress, dampening near-term demand.
+    What you should be most worried about: You are buying a consensus recovery that
+    may already be in the price. The inversion suggests the risk is not being wrong
+    about the direction — it is being right too late.
+  investment_concepts:
+    - "Inversion thinking (Munger / Jacobi)"
+    - "Pre-mortem analysis"
+    - "Confirmation bias mitigation"
+    - "Downside scenario construction"
+    - "Decision quality frameworks"
+  technical_architecture: >
+    FastAPI application with Uvicorn. User submits a decision or thesis statement via
+    a REST API. A structured inversion prompt chain is executed via the Groq API:
+    step 1 identifies the core assumptions implicit in the decision, step 2 inverts
+    each assumption to construct explicit failure modes, step 3 ranks failure modes by
+    plausibility, step 4 produces a concise pre-mortem summary. SQLAlchemy + Alembic
+    provide a persistent database for saving inversion history. User authentication
+    handled via passlib (bcrypt) and python-jose (JWT). SQLite in local dev;
+    PostgreSQL on Render in production.
+  stack:
+    - "Python"
+    - "FastAPI"
+    - "Uvicorn"
+    - "Groq API"
+    - "SQLAlchemy"
+    - "Alembic"
+    - "PostgreSQL"
+    - "Render"
+  features:
+    - "Structured inversion of any decision or thesis"
+    - "Explicit failure mode generation"
+    - "Plausibility-ranked downside scenarios"
+    - "Pre-mortem summary with key risk callout"
+  limitations:
+    - "Output is a reasoning exercise based on the input provided; quality depends on specificity of the decision framing."
+    - "Does not access live market data, news, or financial filings."
+    - "LLM-generated analysis requires analyst review and judgement before acting."
+    - "Not a substitute for independent fundamental research or risk management processes."
+  next_steps:
+    - "Allow users to save and revisit past inversion analyses against outcomes"
+    - "Add structured comparison: bull case vs inverted bear case side-by-side"
+    - "Integrate with Thesis Monitor to auto-run inversion at thesis commit"
+    - "Add portfolio-level inversion: what single macro event breaks the most positions?"
+  live_demo_url: "https://invert-ai.onrender.com/"
+  github_url: "https://github.com/prithish-ray/invert-ai"
+  demo_video_url: ""
+  screenshot_paths: []
+  employer_signal: >
+    Demonstrates awareness of behavioural finance and decision-quality frameworks,
+    the ability to translate a mental model (Munger's inversion) into a usable analyst
+    tool, and a focus on building tools that improve investment process discipline
+    rather than just automating information retr
