@@ -347,6 +347,9 @@
     Investors are naturally wired to build the bull case. Most pre-decision reviews
     ask "why will this work?" rather than "how could this fail?" This confirmation
     bias means downside risks are systematically underweighted at the point of commitment.
+  problem_related_reading:
+    title: "Can AI save us from our behavioural biases?"
+    url: "https://qualitycompounder.substack.com/p/can-ai-save-us-from-our-behavioural"
   target_user: >
     Portfolio managers and analysts who want to pressure-test a decision, stress-test
     an investment thesis, or surface blind spots before committing capital.

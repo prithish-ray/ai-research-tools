@@ -54,6 +54,12 @@
           <div class="detail-section-label">Problem</div>
           <h2>What problem does this solve?</h2>
           <p>{{ tool.problem }}</p>
+          {% if tool.problem_related_reading %}
+          <p style="font-size:0.85rem; margin-top:0.75rem;">
+            <span style="color:var(--text-muted);">Related reading:</span>
+            <a href="{{ tool.problem_related_reading.url }}" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">{{ tool.problem_related_reading.title }}</a>
+          </p>
+          {% endif %}
           {% if tool.research_workflow_pain_point %}
           <p style="color:var(--text-muted); font-size:0.9rem; border-left:3px solid var(--border); padding-left:1rem; margin-top:1rem;">
             <strong>Workflow pain point:</strong> {{ tool.research_workflow_pain_point }}
